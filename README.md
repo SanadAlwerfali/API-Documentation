@@ -10,7 +10,7 @@ These API's require a body which contains the functions inputs. See [Public Func
 
 | Method   | URL                                                                                        | Perameters                                            | Response                                  | Description                                   |
 | -------- | ------------------------------------------------------------------------------------------ | --------------------------------         | ---------------------------------------   | --------------------------------              |
-| `POST`   | `http://localhost:3000/sendNotification?user_id={user_id}&notification_type{0}&redirect_url={url}&content={content}`                                                  |<user_id><content><notification_type><redirect_url>                       | [Send Notification](#send-notifications)  | Creates a notification entry for a user       |
+| `POST`   | `http://localhost:3000/sendNotification?user_id={user_id}&notification_type{0}&redirect_url={url}&noti_content={content}`                                                  |<user_id><noti_content><notification_type><redirect_url>                       | [Send Notification](#send-notifications)  | Creates a notification entry for a user       |
 | `GET`    | `http://127.0.0.1:5000/viewNotifications?user_id={user_id}`                                | <user_id>                        | [View Notification](#view-notifications) | Checks if the user has viewed the notification|
 | `GET`    | `http://localhost:3000/getNotifications?user_id={user_id}`                                 | <user_id>                        | [Get Notification](#get-notifications)   | Retrieves the notifications of the user       |
 | `GET`    | `http://localhost:3000/hasNotifications?user_id={user_id}`                                 | <user_id>                        | [Has Notification](#has-notifications)   | Checks if the user has notifications          |
@@ -167,3 +167,4 @@ Hit enter to select default options, then 'y' to download the emulators when pro
 
 ### Testing
 
+// [Unit Testing] - TODO
