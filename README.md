@@ -8,12 +8,9 @@ The MUNster Messaging Module provides a suite of REST API's for interacting with
 
 These API's require a body which contains the functions inputs. See [Public Function Message Format](#munster-rest-api---public-function-message-format) for more info.
 
-| Method   | URL                                                                                        | Perameters                       | Response                                  | Description                                   |
-| -------- | ------------------------------------------------------------------------------------------ | -------------------------------- | ---------------------------------------   | --------------------------------              |
-| `POST`   | `http://localhost:3000/sendNotification/`                                                  | <user_id>                        | [Send Notification](#send-notifications)  | Creates a notification entry for a user       |
-|	   |                                                                                            | <notification_type>              |                                           |                                               |
-|	   |                                                                                            | <redirect_url>                   |                                           |                                               |
-|	   |                                                                                            | <content>                        |                                           |                                               |
+| Method   | URL                                                                                        | Perameters                                            | Response                                  | Description                                   |
+| -------- | ------------------------------------------------------------------------------------------ | --------------------------------         | ---------------------------------------   | --------------------------------              |
+| `POST`   | `http://localhost:3000/sendNotification/`                                                  | <user_id>,<notification_type>,<redirect_url>,<content>                       | [Send Notification](#send-notifications)  | Creates a notification entry for a user       |
 | `GET`    | `http://127.0.0.1:5000/viewNotifications?user_id={user_id}`                                | <user_id>                        | [View Notification]](#view-notifications) | Checks if the user has viewed the notification|
 | `GET`    | `http://localhost:3000/getNotifications?user_id={user_id}`                                 | <user_id>                        | [Get Notification]](#get-notifications)   | Retrieves the notifications of the user       |
 | `GET`    | `http://localhost:3000/hasNotifications?user_id={user_id}`                                 | <user_id>                        | [Has Notification]](#has-notifications)   | Checks if the user has notifications          |
