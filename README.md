@@ -10,7 +10,7 @@ These API's require a body which contains the functions inputs. See [Public Func
 
 | Method   | URL                                                                                        | Perameters                                            | Response                                  | Description                                   |
 | -------- | ------------------------------------------------------------------------------------------ | --------------------------------         | ---------------------------------------   | --------------------------------              |
-| `POST`   | `http://localhost:3000/sendNotification/`                                                  | <user_id>,<notification_type>,<redirect_url>,<content>                       | [Send Notification](#send-notifications)  | Creates a notification entry for a user       |
+| `POST`   | `http://localhost:3000/sendNotification/`                                                  | <user_id>, <notification_type>, <redirect_url>, <content>                       | [Send Notification](#send-notifications)  | Creates a notification entry for a user       |
 | `GET`    | `http://127.0.0.1:5000/viewNotifications?user_id={user_id}`                                | <user_id>                        | [View Notification]](#view-notifications) | Checks if the user has viewed the notification|
 | `GET`    | `http://localhost:3000/getNotifications?user_id={user_id}`                                 | <user_id>                        | [Get Notification]](#get-notifications)   | Retrieves the notifications of the user       |
 | `GET`    | `http://localhost:3000/hasNotifications?user_id={user_id}`                                 | <user_id>                        | [Has Notification]](#has-notifications)   | Checks if the user has notifications          |
@@ -58,7 +58,7 @@ Response:
 "status: 300 - {user_id} has been redirected to {redirect_url}"
 ```
 
-### View Notification
+### View Notifications
 
 The request body contains the user_id.
 
@@ -75,7 +75,7 @@ Response:
 
 "status: 200 - true"
 ```
-### Get Notification
+### Get Notifications
 The request body contains the user_id.
 
 The response is a list of notification objects for {user_id}
@@ -91,7 +91,7 @@ Response:
 
 [status: 200 - list of notifications]
 ```
-### Has Notification
+### Has Notifications
 
 The request body contains the user_id.
 
