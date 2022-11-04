@@ -10,7 +10,7 @@ These API's require a body which contains the functions inputs. See [Public Func
 
 | Method   | URL                                                                                        | Perameters                                            | Response                                  | Description                                   |
 | -------- | ------------------------------------------------------------------------------------------ | --------------------------------         | ---------------------------------------   | --------------------------------              |
-| `POST`   | `http://localhost:3000/sendNotification?user_id={user_id}&notification_type{0}&redirect_url={url}&noti_content={content}`                                                  |<user_id><noti_content><notification_type><redirect_url>                       | [Send Notification](#send-notifications)  | Creates a notification entry for a user       |
+| `POST`   | `http://localhost:3000/sendNotification?user_id={user_id}&notification_type={n_type}&redirect_url={url}&noti_content={content}`                                                  |<user_id><noti_content><notification_type><redirect_url>                       | [Send Notification](#send-notification)  | Creates a notification entry for a user       |
 | `GET`    | `http://127.0.0.1:5000/viewNotifications?user_id={user_id}`                                | <user_id>                        | [View Notification](#view-notifications) | Checks if the user has viewed the notification|
 | `GET`    | `http://localhost:3000/getNotifications?user_id={user_id}`                                 | <user_id>                        | [Get Notification](#get-notifications)   | Retrieves the notifications of the user       |
 | `GET`    | `http://localhost:3000/hasNotifications?user_id={user_id}`                                 | <user_id>                        | [Has Notification](#has-notifications)   | Checks if the user has notifications          |
@@ -32,13 +32,13 @@ The request body contains the user_id, notification_type, redirect_url, content.
 
 |Type                |parameters  |
 | ------------------ | ---------- |
-| Job-Alert          |    0       |
-| Interview-Request  |    1       |
-| Connection-Request |    2       |
-| New-Connection     |    3       |
-| Post-Share         |    4       |
-| Post-Comment       |    5       |
-| Post-Like          |    6       |
+| Job Alert          |    0       |
+| Interview Request  |    1       |
+| Connection Request |    2       |
+| New Connection     |    3       |
+| Post Share         |    4       |
+| Post Comment       |    5       |
+| Post Like          |    6       |
 
 The response is from the server notifying the client if the request was successfully handled or not.
 
@@ -54,8 +54,9 @@ Request body:
 
 Response:
 
-"status: 200 - notification has been added for {user_id}"
-"status: 300 - {user_id} has been redirected to {redirect_url}"
+[status: 200 - notification has been added for {user_id}]
+[status: 400 - wrong parameters]
+[status: 500 - internal server error]
 ```
 
 ### View Notifications
@@ -73,7 +74,9 @@ Request body:
 
 Response:
 
-"status: 200 - true"
+[status: 200 - true or false]
+[status: 400 - wrong parameter]
+[status: 500 - internal server error]
 ```
 ### Get Notifications
 The request body contains the user_id.
@@ -89,7 +92,13 @@ Request body:
 
 Response:
 
-[status: 200 - list of notifications]
+[status: 200
+
+    [{"timestamp":"1667599644", "notification_type":"job_alert", "content":"New job alert", "redirect_url":"google.com"},
+    {"timestamp":"1667599766", "notification_type":"connection_request", "content":"New connection request", "redirect_url":"google.com"}]
+]
+[status: 400 - wrong parameter]
+[status: 500 - internal server error]
 ```
 ### Has Notifications
 
@@ -106,7 +115,9 @@ Request:
 
 Response:
 
-[status: 200 - true]
+[status: 200 - true or false]
+[status: 400 - wrong parameter]
+[status: 500 - internal server error]
 ```
 ### Notify Message
 The request body contains the user_id.
@@ -119,7 +130,9 @@ The response is true if the user has recieved a message and false otherwise.
 
 Response:
 
-[status: 200 - true]
+[status: 200 - true or false]
+[status: 400 - wrong parameter]
+[status: 500 - internal server error]
 ```
 ### Has Messages
 
@@ -136,7 +149,9 @@ Request:
 
 Response:
 
-[status: 200 - true]
+[status: 200 - true or false]
+[status: 400 - wrong parameter]
+[status: 500 - internal server error]
 ```
 
 ## Development
