@@ -1,5 +1,11 @@
 # MUNster Messaging Module 
 
+
+## MUNster Notifications Minimum Viable Product
+
+In this iteration, we have developed a RESTFUL API that other microservices can utilize to handle notifications across the application. Each API handles a different type of request, including sending notifications, viewing notifications, and checking if a user has un-checked messages or notifications.
+
+
 ## MUNster Notifications REST API - Getting Started
 
 The MUNster Messaging Module provides a suite of REST API's for interacting with the module.
