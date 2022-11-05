@@ -11,12 +11,12 @@ These API's require a body which contains the functions inputs. See [Public Func
 | Method   | URL                                                                                        | Perameters                                            | Response                                  | Description                                   |
 | -------- | ------------------------------------------------------------------------------------------ | --------------------------------         | ---------------------------------------   | --------------------------------              |
 | `POST`   | `http://localhost:3000/sendNotification?user_id={user_id}&notification_type={n_type}&redirect_url={url}&noti_content={content}`                                                  |<user_id><noti_content><notification_type><redirect_url>                       | [Send Notification](#send-notification)  | Creates a notification entry for a user       |
-| `GET`    | `http://127.0.0.1:5000/viewNotifications?user_id={user_id}`                                | <user_id>                        | [View Notification](#view-notifications) | Checks if the user has viewed the notification|
+| `GET`    | `http://localhost:3000/viewNotifications?user_id={user_id}`                                | <user_id>                        | [View Notification](#view-notifications) | Marks the notification as viewed |
 | `GET`    | `http://localhost:3000/getNotifications?user_id={user_id}`                                 | <user_id>                        | [Get Notification](#get-notifications)   | Retrieves the notifications of the user       |
 | `GET`    | `http://localhost:3000/hasNotifications?user_id={user_id}`                                 | <user_id>                        | [Has Notification](#has-notifications)   | Checks if the user has notifications          |
 | `POST`   | `http://localhost:3000/notifyMessage?user_id={user_id}`                                    | <user_id>                        | [Notify Message](#notify-message)         | Creates a message notification for a user     |
 | `GET`    | `http://localhost:3000/hasMessages?user_id={user_id}`                                      | <user_id>                        | [Has Messages](#has-messages)             | Checks if the user has messages               |
-
+| `GET`    | `http://localhost:3000/viewMessage?user_id={user_id}`                                | <user_id>                        | [View Message](#view-message) | Marks the message as viewed |
 ## MUNster REST API - Public Function Message Format
 
 **Note**: when sending json function inputs through HTTP the following header is required:
@@ -54,9 +54,20 @@ Request body:
 
 Response:
 
-[status: 200 - notification has been added for {user_id}]
-[status: 400 - wrong parameters]
-[status: 500 - internal server error]
+{
+    status: 200,
+    message: "notification has been added for {user_id}"
+}
+or
+{
+    status: 400,
+    message: "wrong parameters"
+}
+or
+{
+    status: 500, 
+    message: "internal server error"
+}
 ```
 
 ### View Notifications
@@ -74,9 +85,20 @@ Request body:
 
 Response:
 
-[status: 200 - true or false]
-[status: 400 - wrong parameter]
-[status: 500 - internal server error]
+{
+    status: 200, 
+    message: true or false
+}
+or
+{
+    status: 400,
+    message: "wrong parameters"
+}
+or
+{
+    status: 500, 
+    message: "internal server error"
+}
 ```
 ### Get Notifications
 The request body contains the user_id.
@@ -92,13 +114,22 @@ Request body:
 
 Response:
 
-[status: 200
+{
+    status: 200,
 
-    [{"timestamp":"1667599644", "notification_type":"job_alert", "content":"New job alert", "redirect_url":"google.com"},
+    message: [{"timestamp":"1667599644", "notification_type":"job_alert", "content":"New job alert", "redirect_url":"google.com"},
     {"timestamp":"1667599766", "notification_type":"connection_request", "content":"New connection request", "redirect_url":"google.com"}]
-]
-[status: 400 - wrong parameter]
-[status: 500 - internal server error]
+}
+or
+{
+    status: 400,
+    message: "wrong parameters"
+}
+or
+{
+    status: 500, 
+    message: "internal server error"
+}
 ```
 ### Has Notifications
 
@@ -115,9 +146,20 @@ Request:
 
 Response:
 
-[status: 200 - true or false]
-[status: 400 - wrong parameter]
-[status: 500 - internal server error]
+{
+    status: 200, 
+    message: true or false
+}
+or
+{
+    status: 400,
+    message: "wrong parameters"
+}
+or
+{
+    status: 500, 
+    message: "internal server error"
+}
 ```
 ### Notify Message
 The request body contains the user_id.
@@ -130,9 +172,20 @@ The response is true if the user has recieved a message and false otherwise.
 
 Response:
 
-[status: 200 - true or false]
-[status: 400 - wrong parameter]
-[status: 500 - internal server error]
+{
+    status: 200, 
+    message: true or false
+}
+or
+{
+    status: 400,
+    message: "wrong parameters"
+}
+or
+{
+    status: 500, 
+    message: "internal server error"
+}
 ```
 ### Has Messages
 
@@ -149,9 +202,50 @@ Request:
 
 Response:
 
-[status: 200 - true or false]
-[status: 400 - wrong parameter]
-[status: 500 - internal server error]
+{
+    status: 200, 
+    message: true or false
+}
+or
+{
+    status: 400,
+    message: "wrong parameters"
+}
+or
+{
+    status: 500, 
+    message: "internal server error"
+}
+```
+
+### View Message
+The request body contains the user_id.
+
+The response is "true" if the request was successfully handled "false" otherwise.
+
+```
+Request body:
+
+{
+    "user_id": string,
+}
+
+Response:
+
+{
+    status: 200, 
+    message: true or false
+}
+or
+{
+    status: 400,
+    message: "wrong parameters"
+}
+or
+{
+    status: 500, 
+    message: "internal server error"
+}
 ```
 
 ## Development
