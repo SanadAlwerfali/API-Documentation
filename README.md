@@ -3,7 +3,15 @@
 
 ## MUNster Notifications Minimum Viable Product
 
-In this iteration, we have developed a RESTFUL API that other microservices can utilize to handle notifications across the application. Each API handles a different type of request, including sending notifications, viewing notifications, and checking if a user has un-checked messages or notifications.
+In this iteration, we have developed a RESTFUL API that other microservices can utilize to handle notifications across the application. Each API handles a different type of request, including sending notifications, viewing notifications, and checking if a user has un-checked messages or notifications. Next iterations after the MVP will include showing the notifications in real-time.
+
+In this iteration, Sanad has worked in the Notifications microservice with Yousef Ali.
+
+Sanad was responsible for setting up the environment (Nest.js, Firebase, and Jenkins.) I also created RESTFUL APIs to manage users’ notifications.
+
+Yousef also wrote RESTFUL APIs as well as unit tests for all the functionalities. \
+
+The code, unit tests, and jenkins files are available on Github.
 
 
 ## MUNster Notifications REST API - Getting Started
@@ -62,7 +70,7 @@ Response:
 
 {
     status: 200,
-    message: "notification has been added for {user_id}"
+    message: "notification sent"
 }
 or
 {
