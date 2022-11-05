@@ -22,6 +22,7 @@ The MUNster Messaging Module provides a suite of REST API's for interacting with
 
 These API's require a body which contains the functions inputs. See [Public Function Message Format](#munster-rest-api---public-function-message-format) for more info.
 
+
 | Method   | URL                                                                                        | Perameters                                            | Response                                  | Description                                   |
 | -------- | ------------------------------------------------------------------------------------------ | --------------------------------         | ---------------------------------------   | --------------------------------              |
 | `POST`   | `http://localhost:3000/sendNotification?user_id={user_id}&notification_type={n_type}&redirect_url={url}&noti_content={content}`                                                  |<user_id><noti_content><notification_type><redirect_url>                       | [Send Notification](#send-notification)  | Creates a notification entry for a user       |
