@@ -117,8 +117,15 @@ Response:
 {
     status: 200,
 
-    message: [{"timestamp":"1667599644", "notification_type":"job_alert", "content":"New job alert", "redirect_url":"google.com"},
-    {"timestamp":"1667599766", "notification_type":"connection_request", "content":"New connection request", "redirect_url":"google.com"}]
+    message: [{"timestamp":"1667599644", 
+            "notification_type":"job_alert", 
+            "content":"New job alert", 
+            "redirect_url":"google.com"},
+
+            {"timestamp":"1667599766", 
+            "notification_type":"connection_request", 
+            "content":"New connection request", 
+            "redirect_url":"google.com"}]
 }
 or
 {
