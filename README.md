@@ -5,13 +5,7 @@
 
 In this iteration, we have developed a RESTFUL API that other microservices can utilize to handle notifications across the application. Each API handles a different type of request, including sending notifications, viewing notifications, and checking if a user has un-checked messages or notifications. Next iterations after the MVP will include showing the notifications in real-time.
 
-In this iteration, Sanad has worked in the Notifications microservice with Yousef Ali.
-
-Sanad was responsible for setting up the environment (Nest.js, Firebase, and Jenkins.) I also created RESTFUL APIs to manage users’ notifications.
-
-Yousef also wrote RESTFUL APIs as well as unit tests for all the functionalities. \
-
-The code, unit tests, and jenkins files are available on Github.
+The main logic of the code is available in the `src/app.controller.ts` file, unit tests under `src/app.controller.spec.ts`, and the jenkins file is in the root directory of `MUNster-Notification` repository on Github.
 
 
 ## MUNster Notifications REST API - Getting Started
@@ -25,13 +19,15 @@ These API's require a body which contains the functions inputs. See [Public Func
 
 | Method   | URL                                                                                        | Perameters                                            | Response                                  | Description                                   |
 | -------- | ------------------------------------------------------------------------------------------ | --------------------------------         | ---------------------------------------   | --------------------------------              |
-| `POST`   | `http://localhost:3000/sendNotification?user_id={user_id}&notification_type={n_type}&redirect_url={url}&noti_content={content}`                                                  |<user_id><noti_content><notification_type><redirect_url>                       | [Send Notification](#send-notification)  | Creates a notification entry for a user       |
-| `GET`    | `http://localhost:3000/viewNotifications?user_id={user_id}`                                | <user_id>                        | [View Notification](#view-notifications) | Marks the notification as viewed |
-| `GET`    | `http://localhost:3000/getNotifications?user_id={user_id}`                                 | <user_id>                        | [Get Notification](#get-notifications)   | Retrieves the notifications of the user       |
-| `GET`    | `http://localhost:3000/hasNotifications?user_id={user_id}`                                 | <user_id>                        | [Has Notification](#has-notifications)   | Checks if the user has notifications          |
-| `POST`   | `http://localhost:3000/notifyMessage?user_id={user_id}`                                    | <user_id>                        | [Notify Message](#notify-message)         | Creates a message notification for a user     |
-| `GET`    | `http://localhost:3000/hasMessages?user_id={user_id}`                                      | <user_id>                        | [Has Messages](#has-messages)             | Checks if the user has messages               |
-| `GET`    | `http://localhost:3000/viewMessage?user_id={user_id}`                                | <user_id>                        | [View Message](#view-message) | Marks the message as viewed |
+| `POST`   | `/sendNotification`                                                  |user_id<br> notification_content<br> notification_type<br> redirect_url                       | [Send Notification](#send-notification)  | Creates a notification entry for a user       |
+| `GET`    | `/viewNotifications`                                | user_id                        | [View Notification](#view-notifications) | Marks the latest notifications as viewed |
+| `GET`    | `/getNotifications`                                 | user_id page_number                         | [Get Notification](#get-notifications)   | Retrieves the list of notifications of the user       |
+| `GET`    | `/hasNotifications`                                 | user_id                        | [Has Notification](#has-notifications)   | Checks if the user has notifications          |
+| `POST`   | `/notifyMessage`                                    | user_id                        | [Notify Message](#notify-message)         | Sets the message notification flag to true for a user     |
+| `GET`    | `/hasMessages`                                      | user_id                        | [Has Messages](#has-messages)             | Checks if the user has the message notifications flag set               |
+| `GET`    | `/viewMessage`                                | <user_id>                        | [View Message](#view-message) | Resets the message notification flag for a user |
+
+<br> <br> <br>
 ## MUNster REST API - Public Function Message Format
 
 **Note**: when sending json function inputs through HTTP the following header is required:
@@ -63,8 +59,8 @@ Request body:
 {
     "user_id": string,
     "notification_type": int,
-    "redirect_url": string,
-    "content": string
+    "notification_content": string,
+    "redirect_url": string
 }
 
 Response:
@@ -76,7 +72,7 @@ Response:
 or
 {
     status: 400,
-    message: "wrong parameters"
+    message: "bad request"
 }
 or
 {
@@ -89,7 +85,7 @@ or
 
 The request body contains the user_id.
 
-The response is "true" if the request was successfully handled "false" otherwise.
+The successful response is the number of notifications marked as viewed, even if 0.
 
 ```
 Request body:
@@ -102,12 +98,12 @@ Response:
 
 {
     status: 200, 
-    message: true or false
+    message: "marked X notifications as viewed"
 }
 or
 {
     status: 400,
-    message: "wrong parameters"
+    message: "Bad request."
 }
 or
 {
@@ -116,15 +112,16 @@ or
 }
 ```
 ### Get Notifications
-The request body contains the user_id.
+The request body contains the user_id and the page_number that will be used for pagination purposes. Please note that the page number should be zero for the initial loading of the notification menu.
 
-The response is a list of notification objects for {user_id}
+The response is a list of notification objects for specified user
 
 ```
 Request body:
 
 {
     "user_id": string,
+    "page_number": int,
 }
 
 Response:
@@ -133,19 +130,23 @@ Response:
     status: 200,
 
     message: [{"timestamp":"1667599644", 
-            "notification_type":"job_alert", 
-            "content":"New job alert", 
-            "redirect_url":"google.com"},
+            "notification_type":"0", 
+            "content":"New job alert for job xyz", 
+            "redirect_url":"https://munster.com/jobs/13038"},
 
             {"timestamp":"1667599766", 
-            "notification_type":"connection_request", 
-            "content":"New connection request", 
-            "redirect_url":"google.com"}]
+            "notification_type":"2", 
+            "content":"New connection request from john doe", 
+            "redirect_url":"https://munster.com/connections"},
+            
+            ...
+            
+            ]
 }
 or
 {
     status: 400,
-    message: "wrong parameters"
+    message: "Bad request."
 }
 or
 {
@@ -157,7 +158,7 @@ or
 
 The request body contains the user_id.
 
-The response is true if the user has un-checked notifications and false otherwise.
+The response message is true if the user has un-checked notifications and false otherwise.
 
 ```
 Request:
@@ -170,12 +171,12 @@ Response:
 
 {
     status: 200, 
-    message: true or false
+    message: true | false
 }
 or
 {
     status: 400,
-    message: "wrong parameters"
+    message: "Bad request."
 }
 or
 {
@@ -186,7 +187,7 @@ or
 ### Notify Message
 The request body contains the user_id.
 
-The response is true if the user has recieved a message and false otherwise.
+The successful response is that the message notification flag has been set to true for the specified user.
 ```
 {
     "user_id": string,
@@ -196,12 +197,12 @@ Response:
 
 {
     status: 200, 
-    message: true or false
+    message: "message notification flag set"
 }
 or
 {
     status: 400,
-    message: "wrong parameters"
+    message: "Bad request."
 }
 or
 {
@@ -226,12 +227,12 @@ Response:
 
 {
     status: 200, 
-    message: true or false
+    message: true | false
 }
 or
 {
     status: 400,
-    message: "wrong parameters"
+    message: "Bad request."
 }
 or
 {
@@ -243,7 +244,7 @@ or
 ### View Message
 The request body contains the user_id.
 
-The response is "true" if the request was successfully handled "false" otherwise.
+The successful response is that the message notification flag has been set to false for the specified user.
 
 ```
 Request body:
@@ -256,12 +257,12 @@ Response:
 
 {
     status: 200, 
-    message: true or false
+    message: message notification flag set
 }
 or
 {
     status: 400,
-    message: "wrong parameters"
+    message: "Bad request."
 }
 or
 {
@@ -292,10 +293,26 @@ Log into firebase using:
 
 To set up the Firebase emulators for testing, run:
 
-`firebase init emulators`
+`firebase emulators:start`
 
 Hit enter to select default options, then 'y' to download the emulators when prompted.
 
 ### Testing
 
-// [Unit Testing] - TODO
+Jenkins has been setup to automatically run all unit tests with each commit to the repository. Logs of successfully running these tests are available at https://sdp.guru:8443/job/MUNster-Organization/job/MUNster-notification/job/PR-7/lastBuild/console. Each function (API endpoint) has been tested by multiple scenarios, 18 total. Additionally, failure of communicating with the database has been tested as a scenario for each api (7 total), bringing up the total to 25 unit tests. The scenarios for each endpoint are the following:
+
+ - `sendNoifications`: users Notifications stored successfully, Notifications can be added to existing records, and that different user Notifications are stored separately
+ 
+ - `viewNotifications`: no errors happen if user has no previous notifications, unviewed notifications are successfully marked as viewed, and that previously viewed notifications do not get processed again. 
+ - `getNotifications`: no errors happen if user has no previous notifications, notifications are fetched from the DB in the correct format and order, and that only the specified user's notifications show up in the returned list
+ - `hasNotifications`: returns the correct boolean value depending on whether there is or there are no unread notifications
+ - `notifyMessage`: users have the flag set to false by default, and users have the flag set to true if there are unread messages
+ - `hasMessage`: returns the correct boolean value depending on the unread messages notification flag
+ - `viewMessage`: no errors happen if user has no previously set flag, and successful reseting of flag if it exists
+
+## Work In Progress (next submission)
+ - Post engagement notifications should go through extra processing. Notifications of post engagement should be combined into one. Users should not receive 100 notifications for 100 likes on a single post, same goes for comments and shares.
+ - pagination should be implemented for fetching the database for a user's notifications. only recent 10 should be made available when user calls function for the first time. Further triggers from frontend (on user scroll down) should bring older notifications sequentially.
+ - notifications have to be updated in realtime using web sockets. The functions that will be affected are the `getNotifications`, `hasNotifications`, `hasMessage`.
+ - It is a best practice to check the parameter types passed in the request. Currently it will fail with a generic error, putting it as the liability of the user to ensure the precondition. Next iterations will provide a more helpful error message as to which parameter is missing/wrong type/etc. 
+
