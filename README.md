@@ -1,4 +1,4 @@
-# MUNster Messaging Module 
+# MUNster Notification Module 
 
 
 ## MUNster Notifications Minimum Viable Product
