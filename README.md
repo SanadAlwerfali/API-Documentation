@@ -1,10 +1,17 @@
-# MUNster Notification Module 
+# MUNster Messaging Module 
 
 
 ## MUNster Notifications Minimum Viable Product
 
 In this iteration, we have developed a RESTFUL API that other microservices can utilize to handle notifications across the application. Each API handles a different type of request, including sending notifications, viewing notifications, and checking if a user has un-checked messages or notifications. Next iterations after the MVP will include showing the notifications in real-time.
 
+In this iteration, Sanad has worked in the Notifications microservice with Yousef Ali.
+
+Sanad was responsible for setting up the environment (Nest.js, Firebase, and Jenkins.). He also created RESTFUL APIs to manage users’ notifications.
+
+Youssef also wrote RESTFUL APIs as well as unit tests for all the functionalities. \
+
+The main logic of the code is available in the `src/app.controller.ts` file, unit tests under `src/app.controller.spec.ts`, and the jenkins file is in the root directory of `MUNster-Notification` repository on Github.
 
 
 ## MUNster Notifications REST API - Getting Started
@@ -15,14 +22,16 @@ The MUNster Messaging Module provides a suite of REST API's for interacting with
 
 These API's require a body which contains the functions inputs. See [Public Function Message Format](#munster-rest-api---public-function-message-format) for more info.
 
+The notifications APIs are hosted at the following link https://notifications-5tgazausrq-uc.a.run.app/
+
 
 | Method   | URL                                                                                        | Perameters                                            | Response                                  | Description                                   |
 | -------- | ------------------------------------------------------------------------------------------ | --------------------------------         | ---------------------------------------   | --------------------------------              |
-| `POST`   | `/sendNotification`                                                  |user_id<br> notification_content<br> notification_type<br> redirect_url                       | [Send Notification](#send-notification)  | Creates a notification entry for a user       |
+| `GET`   | `/sendNotification`                                                  |user_id<br> notification_content<br> notification_type<br> redirect_url                       | [Send Notification](#send-notification)  | Creates a notification entry for a user       |
 | `GET`    | `/viewNotifications`                                | user_id                        | [View Notification](#view-notifications) | Marks the latest notifications as viewed |
 | `GET`    | `/getNotifications`                                 | user_id page_number                         | [Get Notification](#get-notifications)   | Retrieves the list of notifications of the user       |
 | `GET`    | `/hasNotifications`                                 | user_id                        | [Has Notification](#has-notifications)   | Checks if the user has notifications          |
-| `POST`   | `/notifyMessage`                                    | user_id                        | [Notify Message](#notify-message)         | Sets the message notification flag to true for a user     |
+| `GET`   | `/notifyMessage`                                    | user_id                        | [Notify Message](#notify-message)         | Sets the message notification flag to true for a user     |
 | `GET`    | `/hasMessages`                                      | user_id                        | [Has Messages](#has-messages)             | Checks if the user has the message notifications flag set               |
 | `GET`    | `/viewMessage`                                | <user_id>                        | [View Message](#view-message) | Resets the message notification flag for a user |
 
@@ -113,7 +122,7 @@ or
 ### Get Notifications
 The request body contains the user_id and the page_number that will be used for pagination purposes. Please note that the page number should be zero for the initial loading of the notification menu.
 
-The response is a list of notification objects for specified user
+The response is a list of 5 notification objects per page for the specified user
 
 ```
 Request body:
