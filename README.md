@@ -5,13 +5,6 @@
 
 In this iteration, we have developed a RESTFUL API that other microservices can utilize to handle notifications across the application. Each API handles a different type of request, including sending notifications, viewing notifications, and checking if a user has un-checked messages or notifications. Next iterations after the MVP will include showing the notifications in real-time.
 
-In this iteration, Sanad has worked in the Notifications microservice with Yousef Ali.
-
-Sanad was responsible for setting up the environment (Nest.js, Firebase, and Jenkins.). He also created RESTFUL APIs to manage users’ notifications.
-
-Youssef also wrote RESTFUL APIs as well as unit tests for all the functionalities. \
-
-The main logic of the code is available in the `src/app.controller.ts` file, unit tests under `src/app.controller.spec.ts`, and the jenkins file is in the root directory of `MUNster-Notification` repository on Github.
 
 
 ## MUNster Notifications REST API - Getting Started
@@ -304,23 +297,4 @@ To set up the Firebase emulators for testing, run:
 `firebase emulators:start`
 
 Hit enter to select default options, then 'y' to download the emulators when prompted.
-
-### Testing
-
-Jenkins has been setup to automatically run all unit tests with each commit to the repository. Logs of successfully running these tests are available at https://sdp.guru:8443/job/MUNster-Organization/job/MUNster-notification/job/PR-7/lastBuild/console. Each function (API endpoint) has been tested by multiple scenarios, 18 total. Additionally, failure of communicating with the database has been tested as a scenario for each api (7 total), bringing up the total to 25 unit tests. The scenarios for each endpoint are the following:
-
- - `sendNoifications`: users Notifications stored successfully, Notifications can be added to existing records, and that different user Notifications are stored separately
- 
- - `viewNotifications`: no errors happen if user has no previous notifications, unviewed notifications are successfully marked as viewed, and that previously viewed notifications do not get processed again. 
- - `getNotifications`: no errors happen if user has no previous notifications, notifications are fetched from the DB in the correct format and order, and that only the specified user's notifications show up in the returned list
- - `hasNotifications`: returns the correct boolean value depending on whether there is or there are no unread notifications
- - `notifyMessage`: users have the flag set to false by default, and users have the flag set to true if there are unread messages
- - `hasMessage`: returns the correct boolean value depending on the unread messages notification flag
- - `viewMessage`: no errors happen if user has no previously set flag, and successful reseting of flag if it exists
-
-## Work In Progress (next submission)
- - Post engagement notifications should go through extra processing. Notifications of post engagement should be combined into one. Users should not receive 100 notifications for 100 likes on a single post, same goes for comments and shares.
- - pagination should be implemented for fetching the database for a user's notifications. only recent 10 should be made available when user calls function for the first time. Further triggers from frontend (on user scroll down) should bring older notifications sequentially.
- - notifications have to be updated in realtime using web sockets. The functions that will be affected are the `getNotifications`, `hasNotifications`, `hasMessage`.
- - It is a best practice to check the parameter types passed in the request. Currently it will fail with a generic error, putting it as the liability of the user to ensure the precondition. Next iterations will provide a more helpful error message as to which parameter is missing/wrong type/etc. 
 
