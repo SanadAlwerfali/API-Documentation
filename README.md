@@ -1,9 +1,7 @@
-# MUNster Messaging Module 
+# MUNster (LinkedIn Clone) Notifications Module
 
 
-## MUNster Notifications Minimum Viable Product
-
-In this iteration, we have developed a RESTFUL API that other microservices can utilize to handle notifications across the application. Each API handles a different type of request, including sending notifications, viewing notifications, and checking if a user has un-checked messages or notifications. Next iterations after the MVP will include showing the notifications in real-time.
+In this microservice, we have developed a RESTFUL API that other microservices can utilize to handle notifications across the application. Each API handles a different type of request, including sending notifications, viewing notifications, and checking if a user has un-checked messages or notifications.
 
 
 
